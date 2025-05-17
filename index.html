@@ -51,11 +51,10 @@
     resultText.textContent = '';
     ente.style.display = 'inline-block';
 
-    // Startwinkel ist -90°, rotiere zufällig bis +90° dazu → Bereich: -90° bis +90°
-    const randomSpin = Math.floor(Math.random() * 181); // 0 bis 180
-    const baseOffset = -90;
-    const fullSpins = 1440; // Für Animationseffekt (4x360°)
-    const finalRotation = fullSpins + baseOffset + randomSpin;
+    // Zufallsrotation zwischen -90° und +90°
+    const randomAngle = Math.floor(Math.random() * 181) - 90; // ergibt -90 bis +90
+    const fullSpins = 1440; // vier volle Umdrehungen für schöne Animation
+    const finalRotation = fullSpins + randomAngle;
 
     ente.style.transform = `rotate(${finalRotation}deg)`;
 
@@ -64,5 +63,7 @@
       animating = false;
     }, 2000);
   });
-</
+</script>
 
+</body>
+</html>
