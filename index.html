@@ -51,17 +51,18 @@
     resultText.textContent = '';
     ente.style.display = 'inline-block';
 
-    // Zufälliger Zielwinkel zwischen 0 und 180 Grad
-    const targetRotation = Math.floor(Math.random() * 181); // 0 - 180
-    ente.style.transform = `rotate(${targetRotation + 1440}deg)`; // +4 volle Umdrehungen für Effekt
+    // Startwinkel ist -90°, rotiere zufällig bis +90° dazu → Bereich: -90° bis +90°
+    const randomSpin = Math.floor(Math.random() * 181); // 0 bis 180
+    const baseOffset = -90;
+    const fullSpins = 1440; // Für Animationseffekt (4x360°)
+    const finalRotation = fullSpins + baseOffset + randomSpin;
 
-    // Warten bis Rotation vorbei
+    ente.style.transform = `rotate(${finalRotation}deg)`;
+
     setTimeout(() => {
       resultText.textContent = "Schnabel zeigt nach links. Du musst DDD spielen!";
       animating = false;
     }, 2000);
   });
-</script>
+</
 
-</body>
-</html>
