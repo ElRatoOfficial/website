@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ente Dreh</title>
+<style>
+  body {
+    margin: 0; height: 100vh; background: #a0d8f7; /* hellblauer Hintergrund */
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    font-family: Arial, sans-serif;
+    user-select: none;
+  }
+  #text {
+    font-size: 2rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  #ente {
+    font-size: 5rem;
+    display: none;
+    position: relative;
+  }
+  #resultText {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    min-height: 2em;
+  }
+</style>
+</head>
+<body>
+
+<div id="text">Klick mich!</div>
+<div id="ente">🦆</div>
+<div id="resultText"></div>
+
+<script>
+  const text = document.getElementById('text');
+  const ente = document.getElementById('ente');
+  const resultText = document.getElementById('resultText');
+  let animating = false;
+
+  text.addEventListener('click', () => {
+    if(animating) return; // verhindert mehrfach Klicks während der Animation
+    animating = true;
+    resultText.textContent = '';
+    ente.style.display = 'inline-block';
+    ente.style.left = '0px';
+
+    // Animation: Ente dreht sich und bewegt sich horizontal von links nach rechts und stoppt dann zufällig
+    let rotation = 0;
+    let pos = 0;
+    const maxPos = window.innerWidth - 100; // Rand abziehen, 100px Puffer
+    // Zufälliger Zielpunkt:
+    const targetPos = Math.floor(Math.random() * maxPos);
+
+    function animate() {
+      if(pos < targetPos) {
+        pos += 10; // Geschwindigkeit
+        rotation += 30; // Drehung pro Frame
+        ente.style.transform = `translateX(${pos}px) rotate(${rotation}deg)`;
+        requestAnimationFrame(animate);
+      } else {
+        // Stoppen und Text anzeigen je nach Position
+        animating = false;
+        ente.style.transform = `translateX(${pos}px) rotate(${rotation}deg)`;
+
+        // Unterschiedliche Texte je nach Position
+        if(pos < maxPos / 3) {
+          resultText.textContent = "Ente links gelandet!";
+        } else if (pos < 2 * maxPos / 3) {
+          resultText.textContent = "Ente in der Mitte!";
+        } else {
+          resultText.textContent = "Ente rechts gelandet!";
+        }
+      }
+    }
+    animate();
+  });
+</script>
+
+</body>
+</html>
